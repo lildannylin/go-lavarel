@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
+	"time"
 )
 
 const version = "1.0.0"
@@ -17,6 +19,7 @@ type Celeritas struct {
 	ErrorLog *log.Logger
 	InfoLog  *log.Logger
 	RootPath string
+	config   config
 }
 
 type config struct {
@@ -61,6 +64,11 @@ func (c *Celeritas) New(rootPath string) error {
 	c.ErrorLog = errorLog
 	c.Debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
 	c.Version = version
+	c.RootPath = rootPath
+	c.config = config{
+		port:     os.Getenv("PORT"),
+		renderer: os.Getenv("RENDERER"),
+	}
 
 	return nil
 }
@@ -76,6 +84,22 @@ func (c *Celeritas) Init(p initPaths) error {
 	}
 
 	return nil
+}
+
+// ListenAndServer starts the web server
+func (c *Celeritas) ListenAndServer() {
+	srv := &http.Server{
+		Addr:              fmt.Sprintf(":%s", os.Getenv("PORT")),
+		ErrorLog:          c.ErrorLog,
+		Handler:           c.routes(),
+		IdleTimeout:       30 * time.Second,
+		ReadHeaderTimeout: 30 * time.Second,
+		WriteTimeout:      600 * time.Second,
+	}
+
+	c.InfoLog.Printf("Listening on port %s", os.Getenv("PORT"))
+	err := srv.ListenAndServe()
+	c.ErrorLog.Fatal(err)
 }
 
 func (c *Celeritas) checkDotEnv(path string) error {
