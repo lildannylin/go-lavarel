@@ -13,3 +13,7 @@ type Token struct {
 	UpdatedAt  time.Time `db:"updated_at" json:"updated_at"`
 	Expires    time.Time `db:"expires" json:"expires"`
 }
+
+func (t *Token) Table() string {
+	return "tokens"
+}
