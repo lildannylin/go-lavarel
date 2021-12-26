@@ -71,8 +71,23 @@ func (c *Celeritas) New(rootPath string) error {
 		return err
 	}
 
-	// Create loggers
 	infoLog, errorLog := c.startLoggers()
+
+	// create to database
+	if os.Getenv("DATABASE_TYPE") != "" {
+		db, err := c.OpenDB(os.Getenv("DATABASE_TYPE"), c.BuildDSN())
+		if err != nil {
+			errorLog.Panicln(err)
+			os.Exit(1)
+		}
+		c.DB = Database{
+			DataType: os.Getenv("DATABASE_TYPE"),
+			Pool:     db,
+		}
+	}
+
+	// Create loggers
+
 	c.InfoLog = infoLog
 	c.ErrorLog = errorLog
 	c.Debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
