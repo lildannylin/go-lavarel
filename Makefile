@@ -1,32 +1,24 @@
-BINARY_NAME=celeritasApp
-
-build:
-	@go mod vendor
-	@echo "Building Celeritas..."
-	@go build -o tmp/${BINARY_NAME} .
-	@echo "Celeritas built!"
-
-run: build
-	@echo "Starting Celeritas..."
-	@./tmp/${BINARY_NAME} &
-	@echo "Celeritas started!"
-
-clean:
-	@echo "Cleaning..."
-	@go clean
-	@rm tmp/${BINARY_NAME}
-	@echo "Cleaned!"
-
+## test: runs all tests
 test:
-	@echo "Testing..."
-	@go test ./...
-	@echo "Done!"
+	@go test -v ./...
 
-start: run
+## cover: opens coverage in browser
+cover:
+	@go test -coverprofile=coverage.out ./... && go tool cover -html=coverage.out
 
-stop:
-	@echo "Stopping Celeritas..."
-	@-pkill -SIGTERM -f "./tmp/${BINARY_NAME}"
-	@echo "Stopped Celeritas!"
+## coverage: displays test coverage
+coverage:
+	@go test -cover ./...
 
-restart: stop start
+## build_cli: builds the command line tool celeritas and copies it to myapp
+build_cli:
+	@go build -o ../myapp/celeritas ./cmd/cli
+
+## build: builds the command line tool into the dist directory
+build:
+	@go build -o ./dist/celeritas ./cmd/cli
+
+## install: builds and installs the command line tool
+install: build
+	@cp ./dist/celeritas ~/go/bin/celeritas
+	@echo "Installed celeritas in ~/go/bin/celeritas"
