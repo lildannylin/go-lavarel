@@ -21,12 +21,12 @@ func (u *User) Table() string {
 	return "user"
 }
 
-func (u *User) GetAll(condition up.Cond) ([]*User, error) {
+func (u *User) GetAll() ([]*User, error) {
 	collection := upper.Collection(u.Table())
 
 	var all []*User
 
-	res := collection.Find(condition)
+	res := collection.Find().OrderBy("last_name")
 	err := res.All(&all)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (u *User) GetByEmail(email string) (*User, error) {
 
 	var token Token
 	collection = upper.Collection(token.Table())
-	res = collection.Find(up.Cond{"user_id =": theUser.ID, "expires <": time.Now()}).OrderBy("created_at desc")
+	res = collection.Find(up.Cond{"user_id =": theUser.ID, "expiry <": time.Now()}).OrderBy("created_at desc")
 	err = res.One(&token)
 	if err != nil {
 		if err != up.ErrNilRecord && err != up.ErrNoMoreRows {
