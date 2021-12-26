@@ -2,6 +2,7 @@ package templates
 
 import (
 	celeritas "github.com/lildannylin/go-laverel"
+	"github.com/lildannylin/go-laverel/cmd/cli/templates/data"
 	"github.com/lildannylin/go-laverel/cmd/cli/templates/handlers"
 	"log"
 	"os"
@@ -32,6 +33,8 @@ func initApplication() *application {
 	}
 
 	app.App.Routes = app.routes()
+
+	app.Models = data.New(app.App.DB.Pool)
 
 	return app
 }
