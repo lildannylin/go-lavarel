@@ -1,4 +1,4 @@
-package myapp
+package templates
 
 import (
 	celeritas "github.com/lildannylin/go-laverel"
@@ -19,7 +19,7 @@ func initApplication() *application {
 		log.Fatal(err)
 	}
 
-	cel.AppName = "myapp"
+	cel.AppName = "templates"
 
 	app := &application{
 		App: cel,

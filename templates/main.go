@@ -1,4 +1,4 @@
-package myapp
+package templates
 
 import celeritas "github.com/lildannylin/go-laverel"
 
