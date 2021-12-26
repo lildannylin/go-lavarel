@@ -2,6 +2,7 @@ package templates
 
 import (
 	celeritas "github.com/lildannylin/go-laverel"
+	"github.com/lildannylin/go-laverel/cmd/cli/templates/handlers"
 	"log"
 	"os"
 )
@@ -19,11 +20,18 @@ func initApplication() *application {
 		log.Fatal(err)
 	}
 
-	cel.AppName = "templates"
+	cel.AppName = "myapp"
 
-	app := &application{
+	myHandlers := &handlers.Handlers{
 		App: cel,
 	}
+
+	app := &application{
+		App:      cel,
+		Handlers: myHandlers,
+	}
+
+	app.App.Routes = app.routes()
 
 	return app
 }
