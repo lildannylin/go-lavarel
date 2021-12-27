@@ -7,8 +7,7 @@ import (
 	"time"
 )
 
-// LoadTime calculates function execution time. To use, add
-// defer c.LoadTime(time.Now()) to the function body
+// LoadTime calculates function execution time.
 func (c *Celeritas) LoadTime(start time.Time) {
 	elapsed := time.Since(start)
 	pc, _, _, _ := runtime.Caller(1)
