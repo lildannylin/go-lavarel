@@ -55,7 +55,7 @@ func doMake(arg2, arg3 string) error {
 			exitGracefully(errors.New(fileName + " already exists!"))
 		}
 
-		data, err := templateFS.ReadFile("templates/handlers/handler.go.txt.txt")
+		data, err := templateFS.ReadFile("templates/handlers/handler.go.txt")
 		if err != nil {
 			exitGracefully(err)
 		}
