@@ -26,6 +26,7 @@ require (
 	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
 	github.com/alicebob/miniredis/v2 v2.17.0 // indirect
 	github.com/andybalholm/cascadia v1.1.0 // indirect
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/bwmarrin/go-alone v0.0.0-20190806015146-742bb55d1631 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
