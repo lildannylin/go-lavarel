@@ -69,7 +69,7 @@ func (m *Mail) Send(msg Message) error {
 	return m.SendSMTPMessage(msg)
 }
 
-// ChooseAPI chooses api to use (specified in .env)
+// ChooseAPI chooses api to use (specified in env.txt)
 func (m *Mail) ChooseAPI(msg Message) error {
 	switch m.API {
 	case "mailgun", "sparkpost", "sendgrid":

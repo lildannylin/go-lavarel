@@ -1,4 +1,4 @@
-package cli
+package main
 
 import (
 	"fmt"
@@ -46,7 +46,7 @@ func doAuth() error {
 	}
 
 	// copy over middleware
-	err = copyFilefromTemplate("templates/middleware/auth.go.txt.txt", cel.RootPath+"/middleware/auth.go.txt")
+	err = copyFilefromTemplate("templates/middleware/auth.go.txt", cel.RootPath+"/middleware/auth.go")
 	if err != nil {
 		exitGracefully(err)
 	}
@@ -56,7 +56,7 @@ func doAuth() error {
 		exitGracefully(err)
 	}
 
-	err = copyFilefromTemplate("templates/middleware/remember.go.txt.txt", cel.RootPath+"/middleware/remember.go.txt")
+	err = copyFilefromTemplate("templates/middleware/remember.go.txt", cel.RootPath+"/middleware/remember.go")
 	if err != nil {
 		exitGracefully(err)
 	}
