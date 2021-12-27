@@ -15,6 +15,6 @@ type application struct {
 }
 
 func main() {
-	c := initApplication()
-	c.App.ListenAndServer()
+	//c := initApplication()
+	//c.App.ListenAndServer()
 }
