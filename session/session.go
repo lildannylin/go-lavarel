@@ -1,7 +1,12 @@
 package session
 
 import (
+	"database/sql"
+	"github.com/alexedwards/scs/mysqlstore"
+	"github.com/alexedwards/scs/postgresstore"
+	"github.com/alexedwards/scs/redisstore"
 	"github.com/alexedwards/scs/v2"
+	"github.com/gomodule/redigo/redis"
 	"net/http"
 	"strconv"
 	"strings"
@@ -11,10 +16,12 @@ import (
 type Session struct {
 	CookieLifetime string
 	CookiePersist  string
-	CookieDomain   string
 	CookieName     string
+	CookieDomain   string
 	SessionType    string
 	CookieSecure   string
+	DBPool         *sql.DB
+	RedisPool      *redis.Pool
 }
 
 func (c *Session) InitSession() *scs.SessionManager {
@@ -26,6 +33,7 @@ func (c *Session) InitSession() *scs.SessionManager {
 		minutes = 60
 	}
 
+	// should cookies persist?
 	if strings.ToLower(c.CookiePersist) == "true" {
 		persist = true
 	}
@@ -44,17 +52,16 @@ func (c *Session) InitSession() *scs.SessionManager {
 	session.Cookie.Domain = c.CookieDomain
 	session.Cookie.SameSite = http.SameSiteLaxMode
 
-	// which session store
+	// which session store?
 	switch strings.ToLower(c.SessionType) {
 	case "redis":
-
+		session.Store = redisstore.New(c.RedisPool)
 	case "mysql", "mariadb":
-
+		session.Store = mysqlstore.New(c.DBPool)
 	case "postgres", "postgresql":
-
+		session.Store = postgresstore.New(c.DBPool)
 	default:
 		// cookie
-
 	}
 
 	return session

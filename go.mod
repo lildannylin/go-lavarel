@@ -14,6 +14,9 @@ require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
 	github.com/Microsoft/go-winio v0.5.1 // indirect
 	github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5 // indirect
+	github.com/alexedwards/scs/mysqlstore v0.0.0-20211203064041-370cc303b69f // indirect
+	github.com/alexedwards/scs/postgresstore v0.0.0-20211203064041-370cc303b69f // indirect
+	github.com/alexedwards/scs/redisstore v0.0.0-20211203064041-370cc303b69f // indirect
 	github.com/alexedwards/scs/v2 v2.5.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/containerd/continuity v0.1.0 // indirect
@@ -26,6 +29,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-migrate/migrate/v4 v4.15.1 // indirect
+	github.com/gomodule/redigo v1.8.6 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
