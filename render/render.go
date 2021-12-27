@@ -29,7 +29,7 @@ type TemplateData struct {
 	Data            map[string]interface{}
 	CSRFToken       string
 	Port            string
-	SevernName      string
+	ServerName      string
 	Secure          bool
 }
 
