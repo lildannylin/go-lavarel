@@ -2,11 +2,13 @@ package handlers
 
 import (
 	celeritas "github.com/lildannylin/go-laverel"
+	"github.com/lildannylin/go-laverel/cmd/cli/templates/data"
 	"net/http"
 )
 
 type Handlers struct {
-	App *celeritas.Celeritas
+	App    *celeritas.Celeritas
+	Models data.Models
 }
 
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
