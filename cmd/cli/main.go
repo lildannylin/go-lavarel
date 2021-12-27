@@ -26,7 +26,7 @@ func main() {
 
 	case "new":
 		if arg2 == "" {
-			exitGracefully(errors.New("new requires an application name"))
+			exitGracefully(errors.New("new requires an applicaiton name"))
 		}
 		doNew(arg2)
 
@@ -37,7 +37,7 @@ func main() {
 		if arg2 == "" {
 			arg2 = "up"
 		}
-		err = celeritas.doMigrate(arg2, arg3)
+		err = doMigrate(arg2, arg3)
 		if err != nil {
 			exitGracefully(err)
 		}
