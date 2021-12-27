@@ -16,4 +16,11 @@ build_cli:
 
 ## build: builds the command line tool dist directory
 build:
+<<<<<<< HEAD
 	@go build -o ./dist/celeritas ./cmd/cli
+=======
+	@go build -o ./dist/celeritas ./cmd/cli
+
+install_cli:
+	@go build -o ~/go/bin/celeritas -ldflags '-s -w' ./cmd/cli
+>>>>>>> Clean up code

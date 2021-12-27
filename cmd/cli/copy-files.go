@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	_ "embed"
 	"errors"
 	"io/ioutil"
 	"os"
