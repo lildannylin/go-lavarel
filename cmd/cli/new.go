@@ -1,4 +1,4 @@
-package cli
+package main
 
 import (
 	"fmt"
@@ -43,8 +43,8 @@ func doNew(appName string) {
 		exitGracefully(err)
 	}
 
-	// create a ready to go .env file
-	color.Yellow("\tCreating .env file...")
+	// create a ready to go env.txt file
+	color.Yellow("\tCreating env.txt file...")
 	data, err := templateFS.ReadFile("templates/env.txt")
 	if err != nil {
 		exitGracefully(err)
@@ -54,7 +54,7 @@ func doNew(appName string) {
 	env = strings.ReplaceAll(env, "${APP_NAME}", appName)
 	env = strings.ReplaceAll(env, "${KEY}", cel.RandomString(32))
 
-	err = copyDataToFile([]byte(env), fmt.Sprintf("./%s/.env", appName))
+	err = copyDataToFile([]byte(env), fmt.Sprintf("./%s/env.txt", appName))
 	if err != nil {
 		exitGracefully(err)
 	}

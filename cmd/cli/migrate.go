@@ -1,4 +1,4 @@
-package cli
+package main
 
 func doMigrate(arg2, arg3 string) error {
 	dsn := getDSN()

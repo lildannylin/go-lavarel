@@ -1,12 +1,13 @@
 package celeritas
 
 import (
-	"github.com/asaskevich/govalidator"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/asaskevich/govalidator"
 )
 
 type Validation struct {
