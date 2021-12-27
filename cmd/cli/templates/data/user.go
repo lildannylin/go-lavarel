@@ -191,3 +191,4 @@ func (u *User) CheckForRememberToken(id int, token string) bool {
 	res := collection.Find(up.Cond{"user_id": id, "remember_token": token})
 	err := res.One(&rememberToken)
 	return err == nil
+}
