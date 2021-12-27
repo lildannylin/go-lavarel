@@ -2,16 +2,18 @@ package data
 
 import (
 	"errors"
+	celeritas "github.com/lildannylin/go-laverel"
 	up "github.com/upper/db/v4"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
+// User is the type for a user
 type User struct {
 	ID        int       `db:"id,omitempty"`
 	FirstName string    `db:"first_name"`
-	Email     string    `db:"email"`
 	LastName  string    `db:"last_name"`
+	Email     string    `db:"email"`
 	Active    int       `db:"user_active"`
 	Password  string    `db:"password"`
 	CreatedAt time.Time `db:"created_at"`
@@ -19,10 +21,19 @@ type User struct {
 	Token     Token     `db:"-"`
 }
 
+// Table returns the table name associated with this model in the database
 func (u *User) Table() string {
-	return "user"
+	return "users"
 }
 
+func (u *User) Validate(validator *celeritas.Validation) {
+	validator.Check(u.LastName != "", "last_name", "Last name must be provided")
+	validator.Check(u.FirstName != "", "first_name", "First name must be provided")
+	validator.Check(u.Email != "", "email", "Email must be provided")
+	validator.IsEmail("email", u.Email)
+}
+
+// GetAll returns a slice of all users
 func (u *User) GetAll() ([]*User, error) {
 	collection := upper.Collection(u.Table())
 
@@ -37,6 +48,7 @@ func (u *User) GetAll() ([]*User, error) {
 	return all, nil
 }
 
+// GetByEmail gets one user, by email
 func (u *User) GetByEmail(email string) (*User, error) {
 	var theUser User
 	collection := upper.Collection(u.Table())
@@ -48,7 +60,7 @@ func (u *User) GetByEmail(email string) (*User, error) {
 
 	var token Token
 	collection = upper.Collection(token.Table())
-	res = collection.Find(up.Cond{"user_id =": theUser.ID, "expiry <": time.Now()}).OrderBy("created_at desc")
+	res = collection.Find(up.Cond{"user_id =": theUser.ID, "expiry >": time.Now()}).OrderBy("created_at desc")
 	err = res.One(&token)
 	if err != nil {
 		if err != up.ErrNilRecord && err != up.ErrNoMoreRows {
@@ -61,6 +73,7 @@ func (u *User) GetByEmail(email string) (*User, error) {
 	return &theUser, nil
 }
 
+// Get gets one user by id
 func (u *User) Get(id int) (*User, error) {
 	var theUser User
 	collection := upper.Collection(u.Table())
@@ -73,7 +86,7 @@ func (u *User) Get(id int) (*User, error) {
 
 	var token Token
 	collection = upper.Collection(token.Table())
-	res = collection.Find(up.Cond{"user_id =": theUser.ID, "expiry <": time.Now()}).OrderBy("created_at desc")
+	res = collection.Find(up.Cond{"user_id =": theUser.ID, "expiry >": time.Now()}).OrderBy("created_at desc")
 	err = res.One(&token)
 	if err != nil {
 		if err != up.ErrNilRecord && err != up.ErrNoMoreRows {
@@ -86,6 +99,7 @@ func (u *User) Get(id int) (*User, error) {
 	return &theUser, nil
 }
 
+// Update updates a user record in the database
 func (u *User) Update(theUser User) error {
 	theUser.UpdatedAt = time.Now()
 	collection := upper.Collection(u.Table())
@@ -94,10 +108,10 @@ func (u *User) Update(theUser User) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
+// Delete deletes a user by id
 func (u *User) Delete(id int) error {
 	collection := upper.Collection(u.Table())
 	res := collection.Find(id)
@@ -105,10 +119,11 @@ func (u *User) Delete(id int) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
+
 }
 
+// Insert inserts a new user, and returns the newly inserted id
 func (u *User) Insert(theUser User) (int, error) {
 	newHash, err := bcrypt.GenerateFromPassword([]byte(theUser.Password), 12)
 	if err != nil {
@@ -130,6 +145,7 @@ func (u *User) Insert(theUser User) (int, error) {
 	return id, nil
 }
 
+// ResetPassword resets a users's password, by id, using supplied password
 func (u *User) ResetPassword(id int, password string) error {
 	newHash, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 	if err != nil {
@@ -142,6 +158,7 @@ func (u *User) ResetPassword(id int, password string) error {
 	}
 
 	u.Password = string(newHash)
+
 	err = theUser.Update(*u)
 	if err != nil {
 		return err
@@ -150,16 +167,27 @@ func (u *User) ResetPassword(id int, password string) error {
 	return nil
 }
 
-func (u *User) PasswordMatches(plaintText string) (bool, error) {
-	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(plaintText))
+// PasswordMatches verifies a supplied password against the hash stored in the database.
+func (u *User) PasswordMatches(plainText string) (bool, error) {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(plainText))
 	if err != nil {
 		switch {
 		case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
+			// invalid password
 			return false, nil
 		default:
+			// some kind of error occurred
 			return false, err
 		}
 	}
 
 	return true, nil
 }
+
+func (u *User) CheckForRememberToken(id int, token string) bool {
+	var rememberToken RememberToken
+	rt := RememberToken{}
+	collection := upper.Collection(rt.Table())
+	res := collection.Find(up.Cond{"user_id": id, "remember_token": token})
+	err := res.One(&rememberToken)
+	return err == nil
