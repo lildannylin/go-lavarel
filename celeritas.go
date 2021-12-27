@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
 	"github.com/joho/godotenv"
+	"github.com/lildannylin/go-laverel/cache"
 	"github.com/lildannylin/go-laverel/render"
 	"github.com/lildannylin/go-laverel/session"
 	"log"
