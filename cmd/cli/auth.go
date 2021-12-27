@@ -30,12 +30,12 @@ func doAuth() error {
 		exitGracefully(err)
 	}
 
-	err = copyFilefromTemplate("templates/data/user.go.txt", cel.RootPath+"/data/user.go")
+	err = copyFilefromTemplate("templates/data/user.go.txt.txt", cel.RootPath+"/data/user.go.txt")
 	if err != nil {
 		exitGracefully(err)
 	}
 
-	err = copyFilefromTemplate("templates/data/token.go.txt", cel.RootPath+"/data/token.go")
+	err = copyFilefromTemplate("templates/data/token.go.txt.txt", cel.RootPath+"/data/token.go.txt")
 	if err != nil {
 		exitGracefully(err)
 	}
@@ -51,7 +51,7 @@ func doAuth() error {
 		exitGracefully(err)
 	}
 
-	err = copyFilefromTemplate("templates/middleware/auth-token.go.txt", cel.RootPath+"/middleware/auth-token.go")
+	err = copyFilefromTemplate("templates/middleware/auth-token.go.txt.txt", cel.RootPath+"/middleware/auth-token.go.txt")
 	if err != nil {
 		exitGracefully(err)
 	}
@@ -61,7 +61,7 @@ func doAuth() error {
 		exitGracefully(err)
 	}
 
-	err = copyFilefromTemplate("templates/handlers/auth-handlers.go.txt", cel.RootPath+"/handlers/auth-handlers.go")
+	err = copyFilefromTemplate("templates/handlers/auth-handlers.go.txt.txt", cel.RootPath+"/handlers/auth-handlers.go.txt")
 	if err != nil {
 		exitGracefully(err)
 	}
