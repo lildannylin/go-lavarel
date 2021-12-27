@@ -9,7 +9,7 @@ require (
 
 require (
 	github.com/CloudyKit/jet/v6 v6.1.0
-	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/ainsleyclark/go-mail v1.0.3
 	github.com/alexedwards/scs/mysqlstore v0.0.0-20211203064041-370cc303b69f
 	github.com/alexedwards/scs/postgresstore v0.0.0-20211203064041-370cc303b69f
@@ -31,7 +31,8 @@ require (
 	github.com/justinas/nosurf v1.1.1
 	github.com/ory/dockertest/v3 v3.8.1
 	github.com/robfig/cron/v3 v3.0.0
-	github.com/upper/db/v4 v4.2.1 // indirect
+	github.com/upper/db/v4 v4.2.1
 	github.com/vanng822/go-premailer v1.20.1
 	github.com/xhit/go-simple-mail/v2 v2.10.0
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 )

@@ -2,6 +2,7 @@ package cache
 
 import (
 	"github.com/alicebob/miniredis/v2"
+	"github.com/dgraph-io/badger/v3"
 	"github.com/gomodule/redigo/redis"
 	"log"
 	"os"

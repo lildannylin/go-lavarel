@@ -66,8 +66,8 @@ type config struct {
 	redis       redisConfig
 }
 
-// New reads the .env file, creates our application config, populates the Celeritas type with settings
-// based on .env values, and creates necessary folders and files if they don't exist
+// New reads the env.txt file, creates our application config, populates the Celeritas type with settings
+// based on env.txt values, and creates necessary folders and files if they don't exist
 func (c *Celeritas) New(rootPath string) error {
 	pathConfig := initPaths{
 		rootPath:    rootPath,
@@ -84,8 +84,8 @@ func (c *Celeritas) New(rootPath string) error {
 		return err
 	}
 
-	// read .env
-	err = godotenv.Load(rootPath + "/.env")
+	// read env.txt
+	err = godotenv.Load(rootPath + "/env.txt")
 	if err != nil {
 		return err
 	}
@@ -251,7 +251,7 @@ func (c *Celeritas) ListenAndServe() {
 }
 
 func (c *Celeritas) checkDotEnv(path string) error {
-	err := c.CreateFileIfNotExists(fmt.Sprintf("%s/.env", path))
+	err := c.CreateFileIfNotExists(fmt.Sprintf("%s/env.txt", path))
 	if err != nil {
 		return err
 	}

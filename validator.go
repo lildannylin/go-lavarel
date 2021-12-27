@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/asaskevich/govalidator"
 )
 
 type Validation struct {

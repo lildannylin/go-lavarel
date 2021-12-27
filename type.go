@@ -2,11 +2,15 @@ package celeritas
 
 import "database/sql"
 
+// initPaths is used when initializing the application. It holds the root
+// path for the application, and a slice of strings with the names of
+// folders that the application expects to find.
 type initPaths struct {
 	rootPath    string
 	folderNames []string
 }
 
+// cookieConfig holds cookie config values
 type cookieConfig struct {
 	name     string
 	lifetime string

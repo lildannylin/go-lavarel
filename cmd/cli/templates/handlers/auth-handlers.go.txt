@@ -4,11 +4,12 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"github.com/CloudyKit/jet/v6"
 	"github.com/lildannylin/go-laverel/cmd/cli/templates/data"
+	"github.com/lildannylin/go-laverel/mailer"
+	"github.com/lildannylin/go-laverel/urlsigner"
 	"net/http"
 	"time"
-
-	"github.com/CloudyKit/jet/v6"
 )
 
 // UserLogin displays the login page
